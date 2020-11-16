@@ -26,14 +26,12 @@ if answ == "y":
 	p0_d = int(input())
 	p0 = [p0_a, p0_b, p0_c, p0_d]
 else:
-	p0 = [138.0, 512.0, 529.0,  -44.0]
-
+	p0 = [138.0, 512.0, 529.0,  -44.0]    # tapasztalati kezdőértékek
 
 # gauss görbét illesztő függvény
 def func(x, a, b, c, d):
 	y = a + (b-a)*np.exp(-(x-c)*(x-c)/(2*d*d))
 	return y
-
 
 # függvény fájlba íráshoz
 def params_to_txt(name, data):
@@ -41,20 +39,22 @@ def params_to_txt(name, data):
 		for i in range(len(data)):
 			f.write(str(data[i])+"\n")
 
-
+			
 # adatok beolvasása a megadott fájlból:
 df = pd.read_fwf(input_name, header=None)
 x = df.iloc[:,:1].values
 y = df.iloc[:,1:].values
 
+# megfelelő formátum elérése
 x = np.array([float(i) for i in x])
 y = np.array([float(i) for i in y])
 
 # fittelés
 popt, pcov = curve_fit(func, x, y, p0=p0)
-xFit = np.arange(100,900,0.5)
+xFit = np.arange(100,900,0.5)    # egy értelmes tartomány megadása
 
-# ábrázolás (jó látni rögtön, hogy mi a fittelés eredménye - mert mi van, ha rossz..?)
+# ábrázolás (jó látni rögtön, hogy mi a fittelés eredménye
+# - mert mi van, ha szemmel láthatóan rossz..?)
 plt.plot(x,y,'*--', label="Adatpontok")
 plt.plot(xFit,func(xFit, *popt), 'r', label="Illesztett görbe")
 
