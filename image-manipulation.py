@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-debug = False
+
 
 sharp_kernel = np.array([[-1, -1, -1], [-1, 10, -1], [-1, -1, -1]])
 a = "oldat"
@@ -25,8 +25,6 @@ for j in range(len(aa)):
     for i in range(1,8):
         lista = np.append(lista, aa[j]+'-'+str(i))
 
-if debug:
-    print(lista)
 
 # képmanipulációk a lista elemeire:
 for i in lista:
@@ -38,7 +36,7 @@ for i in lista:
     crop = rot[1000:2352, 600:3136]
 	# élesítés (már amennyire lehet)
     sharp = cv2.filter2D(crop, -1, sharp_kernel)
+	# vertikális tükrözés
+    flipVertical = cv2.flip(sharp, 0)
 	# képek mentése új néven
-    cv2.imwrite("szerk/"+i+"_RC.jpg", sharp)
-    if debug:
-        print("kész lett: ", i)
+    cv2.imwrite("szerk/"+i+"_RC.jpg", flipVertical)
