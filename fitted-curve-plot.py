@@ -15,9 +15,9 @@ def func(x,a,b,c,d):
 	y = a + (b-a)*np.exp(-(x-c)*(x-c)/(2*d*d))
 	return y
 
-colors = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "black", "brown"]
+colors = ["red", "orange", "yellow", "green", "blue", "purple", "pink"]
 
-# nyers adatpontok ábrázolása:
+# illesztett görbék ábrázolása:
 for i in range(len(txt_names)):
 	df = pd.read_fwf(txt_names[i],header=None)
 	a = np.array(df.iloc[0,:].values)
@@ -27,7 +27,6 @@ for i in range(len(txt_names)):
 	xFit = np.arange(100,900,0.5)
 	yFit = func(xFit, a, b, c, d)
 	plt.plot(xFit, yFit, '--', color=colors[i], label="t"+str(i)+" görbe")
-
 
 # grafikon egyéb dolgai:
 plt.grid()
